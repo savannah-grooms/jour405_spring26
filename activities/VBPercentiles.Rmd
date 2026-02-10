@@ -36,7 +36,7 @@ team_aces |> mutate(percentile = ntile(total_aces, 100))
 ### Task 5: Describe the percentiles
 
 Write a couple of sentences that puts Maryland into context with the other teams in the dataset. You can do some Internet research to help with this.
-
+According to the data table, University of Maryland was in the 95th percentile of teams for service aces. This means that they ranked equal or better than 95% of teams in terms of service aces. Despite this, the dbk reported that they, "finishing near the bottom of the Big Ten". Therefore, despite having a high ranking of service aces doesn't mean that you necessarily score well. 
 
 
 When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.

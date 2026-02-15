@@ -76,8 +76,17 @@ An analysis of 2019 and 2020 crime data across Maryland cities shows that crime 
 Save this notebook, then commit it to your local repository. Push the changes to your GitHub repository and submit the URL for this file in ELMS.
 
 ###Task 10:Percentiles
+```{r}
 md_cities_percentiles <- md_cities_rates |>
   mutate(percentile = ntile(violent2020, 100))
-
+  md_cities_percentiles |>
+  filter(percentile > 90) |>
+  tally()
+```  
+  There are 10 cities above the 90th percentile. 
+```{r}
 md_cities_rates |>
   summarize(IQR_2020 = IQR(violent2020))
+```  
+
+In a way, my story from the previous assignment changes because the new analysis shows violent crime is not broadly rising across small Maryland cities but is concentrated in a relatively small group of places, that being said dramatic percentage increases in smaller towns can be considered misleading especially after viewing the percentiles.

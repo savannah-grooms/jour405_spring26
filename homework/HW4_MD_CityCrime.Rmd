@@ -74,3 +74,10 @@ An analysis of 2019 and 2020 crime data across Maryland cities shows that crime 
 ### Task 9: Save Your Work and Put it on GitHub
 
 Save this notebook, then commit it to your local repository. Push the changes to your GitHub repository and submit the URL for this file in ELMS.
+
+###Task 10:Percentiles
+md_cities_percentiles <- md_cities_rates |>
+  mutate(percentile = ntile(violent2020, 100))
+
+md_cities_rates |>
+  summarize(IQR_2020 = IQR(violent2020))

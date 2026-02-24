@@ -74,6 +74,8 @@ summary(daily_calls$call_count)
 
 Let's visualize the time series of daily calls. What patterns do you see? If you had to draw horizontal lines that would highlight unusual days, where would those lines be?
 
+I notice that around New Years Day had a high amount of calls for overdoses. In addition, in October of 2022, maybe around Halloween it seems to have a high spike in calls. On the flip side, towards the end grid, I'm assuming late Feb or March of 2023 has a strong dip in calls. I wonder why this might be the case. 
+
 ANSWER HERE
 
 ```{r daily-calls-plot}
@@ -298,5 +300,4 @@ top_outliers |> kable(digits = 2)
 
 Based on our z-score analysis, what are some potential angles for reporting? What would your next steps be and what would you tell an editor about your findings?
 
-ANSWER HERE
-
+Based on my z-score analysis, I think a good angle to report on is the influx of overdose calls within eight days in July.A good story to report on would be why did this occur? Was there potentially a laced version of this drug? How did this impact the community?

@@ -114,8 +114,7 @@ actual_prob
 ```
 
 **Write a sentence describing this probability in plain English. How does the normal approximation (prob_less) compare to the actual percentage?**
-
-ANSWER HERE
+There is about an 18% chance that a White House employee earns more than $150,000. The normal approximation is about 17% so the normal model underestimates the probability slightly (about 1.3%). 
 
 ### Task 5: Probability between two values (3 points)
 
@@ -125,21 +124,21 @@ You'll need to calculate z-scores for those two figures, use `pnorm()` for each,
 
 ```{r}
 
-z_lower <- (REPLACE_ME - mean_sal) / sd_sal
-z_upper <- (REPLACE_ME - mean_sal) / sd_sal
+z_lower <- (80000 - mean_sal) / sd_sal
+z_upper <- (120000 - mean_sal) / sd_sal
 
 prob_between <- pnorm(z_upper) - pnorm(z_lower)
 prob_between
 
 # Verify with actual data
-actual_between <- sum(wh_paid$SALARY >= REPLACE_ME & wh_paid$SALARY <= REPLACE_ME) / total_n
+actual_between <- sum(wh_paid$SALARY >= 80000 & wh_paid$SALARY <= 120000) / total_n
 actual_between
 
 ```
 
 **Interpret this result. What does this "middle range" tell us about the White House salary structure?**
 
-ANSWER HERE
+About 33% of people make this "middle range" salary in the White House. The normal model overestimates the data at 37%. Therefore, the data is more skewed and most salaries are either higher or lower than the middle range salaries. 
 
 ### Task 6: Expected vs. observed (3 points)
 
@@ -171,7 +170,7 @@ bins |> select(category, expected_count, observed_count, difference)
 
 **Where does reality differ most from what the normal distribution predicts? What might explain those differences?**
 
-ANSWER HERE
+The reality differs the most from the 
 
 ### Task 7: Story pitch (4 points)
 

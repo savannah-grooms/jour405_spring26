@@ -110,7 +110,7 @@ ggplot(accidents, aes(x = day_of_week, y = total)) +
 ### Task 3 (2 points)
 Based on the day-of-week analysis, which day(s) have the highest and lowest average accidents? Why might these patterns exist?
 
-ANSWER HERE
+The day-of-the-week analysis shows that Friday and Saturday have the highest average accidents and it appears that Monday and the rest of the week days have lower. This pattern is probably the case due to work. People normally go straight to work and come home on week days while some might go out on weekends. This is reflective of increase in speeding or trips after going out. 
 
 ## Calculating Z-Scores
 
@@ -159,7 +159,7 @@ unusual_days |>
 ### Task 5 (3 points)
 Choose one of the top 10 unusual days and research what might have happened on that date. Look for weather events, holidays, major incidents, or other factors that could explain the unusual number of accidents. Briefly describe your findings and how you would incorporate this context into a story.
 
-The date which had the most accidents was Oct. 29, 2021. 
+The date which had the most accidents was Oct. 29, 2021. While I was researching this date, I stumbled across this news article, published by dcist, https://dcist.com/story/21/10/29/dc-maryland-virginia-coastal-flooding-warning-oct-29-30/, which says that the DMV experienced the worst tidal flooding in years. Halloween is also around this time. I think that when reporting on events such as flooding we should incorporate how accidents can be a major problem in an event like this. 
 
 Let's visualize these unusual days:
 
@@ -189,9 +189,9 @@ Let's calculate z-scores that account for day of week patterns based on the same
 accidents <- accidents |>
   group_by(day_of_week) |>
   mutate(
-    dow_mean = REPLACE_ME,
-    dow_sd = REPLACE_ME,
-    dow_z_score = (REPLACE_ME - REPLACE_ME) / REPLACE_ME
+    dow_mean = mean(total),
+    dow_sd = sd(total),
+    dow_z_score = (total - dow_mean) / dow_sd 
   ) |>
   ungroup()
 
@@ -210,7 +210,7 @@ unusual_dow |>
 ### Task 7 (3 points)
 Compare the days that have extreme z-scores overall versus those with extreme day-of-week z-scores. How do these lists differ? What journalistic insights can you draw from comparing these two different approaches to measuring "unusual" days?
 
-ANSWER HERE
+When we compare extreme z-scores overall we are comparing the accident rate across the board versus when we compare extreme day-of-the-week z-scores we are comparing the z-scores to only the rest of that specific day of the week. The day-of-the-week list breaks that pattern of mostly Saturdays and Fridays. It flagged weekdays which before were very slow and didn't rank on the z-score list. From a journalistic standpoint, I would approach the this differently. With the overall z-scores I would question why the pattern. And look at it through a system of occurrence. On the day-of-the-week z-score I would question specific days. What major holiday or severe weather could cause a peak in accidents?
 
 Let's see how many unusual days we have for each day of the week:
 
@@ -289,7 +289,7 @@ unusual_monthly |>
 ### Task 8 (2 points)
 Based on the monthly pattern analysis, which months have the highest and lowest average accidents? Develop a hypothesis about why these seasonal patterns exist.
 
-ANSWER HERE
+Based on the monthly pattern analysis, the data has a peak in Feb., May and October. The highest overall season for accidents is September through December while Jan has the lowest average accidents. I believe that October may have just had bad weather. The late-year increases in accidents can be contributed to the days getting darker faster and the colder weather coming in. October is also homecoming season for various colleges and highschools so students may be out partying causing accidents. 
 
 ## Identifying Extreme Outliers
 
@@ -314,9 +314,25 @@ if(nrow(extreme_outliers) > 0) {
 ### Task 9 (2 points)
 For the extreme outliers identified (z-scores beyond ±3), what do they have in common?
 
-ANSWER HERE
+For the extreme outliers, they all occur on either a Friday or a Saturday. The end of a week. 
 
 ## Your Best Story Pitch
 
 ### Task 10 (5 points)
 Based on all the analyses performed, craft your best story pitch, including a headline and lede. Be sure to include what kinds of sources/people you'd talk to for the story.
+
+Fall Season Brings Higher Crash Rates in Prince George's County: Here’s How Drivers Can Stay Safe
+
+As the daylight fades earlier and the roads grow busier, recent data shows a clear seasonal trend: accidents rise sharply as the county approaches fall, with the highest average occurring in October. While weekends bring more crashes, several fall days stand out as unusually dangerous compared to normal traffic patterns. 
+
+Here are a few tips from experts on how to stay safe during the peak of accidents. 
+
+Sources: 
+George Nader
+Chief of Police
+Prince George's County 
+
+
+Maryland Accident Reconstruction Expert Witnesses
+Accident & Safety Consultants
+https://www.jurispro.com/category/accident-reconstruction-s-4/MD

@@ -170,7 +170,7 @@ bins |> select(category, expected_count, observed_count, difference)
 
 **Where does reality differ most from what the normal distribution predicts? What might explain those differences?**
 
-The reality differs the most from the 
+The reality differs the most from the below $60,000 range. The difference is -38.3% lower than what the normal model predicts.This means that the salary distribution for the White House employees are not symmetric like a normal curve but more skewed. Most people make at least $60,000 at the White House due to the cost of living in DC. 
 
 ### Task 7: Story pitch (4 points)
 
@@ -178,7 +178,9 @@ Based on your probability analysis, write a headline and lede for a story about 
 
 Then write 2-3 sentences describing how you would use probability thinking to advance this story — what could you compare these probabilities to, and what additional analysis would help?
 
-ANSWER HERE
+White House Pay Lags Behind D.C Living Costs for Most Staff
+
+
 
 ### Task 8: Save Your Work and Put it on GitHub
 

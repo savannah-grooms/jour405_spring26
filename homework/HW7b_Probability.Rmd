@@ -10,6 +10,8 @@ Load the tidyverse and the White House salaries data from https://raw.githubuser
 
 ```{r}
 library(tidyverse)
+
+wh_salaries <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/white_house_salaries_2025.csv")
 ```
 
 ### Task 2: Filter and summarize (2 points)
@@ -20,6 +22,12 @@ You may remember from HW3 that some White House staffers have a salary of $0. Le
 wh_paid <- wh_salaries |>
   filter(SALARY > 0)
 
+wh_paid |>
+  summarize(
+    avg_whsalary = mean(SALARY),
+    median_whsalary = median(SALARY),
+    sd_whsalary = sd(SALARY)
+  )
 
 
 ```
@@ -27,11 +35,15 @@ wh_paid <- wh_salaries |>
 Now create a histogram of the paid salaries with a vertical line for the mean and two more for ±1 standard deviation, similar to what you did in HW6 with Spotify data.
 
 ```{r}
+wh_paid |> 
+  ggplot() + 
+  geom_histogram(aes(x = SALARY), binwidth = 10000) +
+  geom_vline(xintercept = mean(wh_paid$SALARY), color = "red", linetype = "dashed", size = 1) 
 ```
 
 **Describe the shape of the distribution. Is it roughly normal? Skewed? Where do most salaries cluster?**
 
-ANSWER HERE
+The distribution is skewed to the right with most of the salaries clustered from $60,000 to $125,000. Most people are paid around 60,000 which is where the mode is situated. 
 
 ### Task 3: The Empirical Rule (3 points)
 
@@ -65,7 +77,7 @@ empirical
 
 **How closely does the data follow the empirical rule? What does any deviation tell you about the distribution?**
 
-ANSWER HERE
+To my surprise, the data follows the empirical rule a lot closer than I thought. The actual percent for within 1 SD is 65.9, the actual percent for within 2 SD is 91.2 compared to 95% and the actual percent for 3 SD is 100%. This suggests that the salary distribution, while not perfectly normal, aligns reasonably well with the patterns predicted by the empirical rule. 
 
 ### Task 4: From z-scores to probability with pnorm() (4 points)
 

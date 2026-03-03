@@ -180,9 +180,9 @@ Then write 2-3 sentences describing how you would use probability thinking to ad
 
 White House Pay Lags Behind D.C Living Costs for Most Staff
 
-Roughly 38% of White House employees earn salaries in the middle-pay range, from $60,000 to $90,0000. A level that may not stretch far in Washington, DC, where housing and expenses is ranked among the highest in the county, raising questions about how comfortably many staffers can afford to live near the nation's captial. 
+Roughly 38% of White House employees earn salaries in the middle-pay range, from $60,000 to $90,0000. A level that may not stretch far in Washington, DC, where housing and expenses is ranked among the highest in the county, raising questions about how comfortably many staffers can afford to live near the nation's capital. 
 
-The way I would take this story is I would compare the likelihood of earning a middle-range salary at the White House to similar policy jobs in other federal agencies. I would interview workers and then comparing these salary probabilities to the share of income typically spent on housing in D.C.
+The way I would take this story is I would compare the middle-range salary at the White House to similar policy jobs in other agencies. I would interview workers and then comparing these salary probabilities to the share of income typically spent on housing in D.C.
 
 
 

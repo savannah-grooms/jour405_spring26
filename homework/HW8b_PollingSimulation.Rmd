@@ -29,9 +29,9 @@ Create a new column called `evangelical` that is `TRUE` if a respondent's `trad`
 
 ```{r}
 ces <- ces |>
-  mutate(unaffiliated = trad %in% c("White Evangelical"))
+  mutate(evangelical = trad =="White Evangelical")
 
-population_proportion <- mean(ces$unaffiliated)
+population_proportion <- mean(ces$evangelical)
 
 ```
 
@@ -49,8 +49,8 @@ set.seed(42)
 sample_50 <- ces |> 
   sample_n(50)
 
-sample_50|> summarize(mean_50 = mean(unaffiliated))
-proportion_50 <- mean(sample_50$unaffiliated)
+sample_50|> summarize(mean_50 = mean(evangelical))
+proportion_50 <- mean(sample_50$evangelical)
 
 
 ```
@@ -69,8 +69,8 @@ set.seed(50)
 sample_500 <- ces |> 
   sample_n(500)
 
-sample_500|> summarize(mean_500 = mean(unaffiliated))
-proportion_500 <- mean(sample_500$unaffiliated)
+sample_500|> summarize(mean_500 = mean(evangelical))
+proportion_500 <- mean(sample_500$evangelical)
 ```
 
 Did the larger sample improve the estimate? How does the improvement compare to what you saw in class?
@@ -106,7 +106,7 @@ simulations_all <- bind_rows(simulations_50, simulations_500) |>
 
 ggplot(simulations_all, aes(x = proportion)) +
   geom_histogram(bins = 30, fill = "steelblue", color = "white") +
-  geom_vline(xintercept = proportion, color = "red", linetype = "dashed", linewidth = 1) +
+  geom_vline(xintercept = population_proportion, color = "red", linetype = "dashed", linewidth = .2) +
   facet_wrap(~sample_size) +
   labs(
     title = "Distribution of Sample Estimates: White Evangelicals",
@@ -122,19 +122,19 @@ ggplot(simulations_all, aes(x = proportion)) +
 
 **Describe the shape of the n=50 histogram.** Is it as symmetric as the unaffiliated histogram from class? Why do you think that is, given that White Evangelicals make up only about 10% of the population?
 
-ANSWER HERE
+The n = 50 histogram is more spread out and a little less symmetric than the one we saw in class for the unaffiliated group. Since White Evangelicals only make up about 10% of the population, there are fewer of them in small samples. With thst being said, the estimates can vary more and the distribution looks less balanced. 
 
 **Compare the n=50 and n=500 histograms for this group.** How much does the distribution change with a larger sample? Is the improvement bigger or smaller than what you saw in class with the unaffiliated group?
 
-ANSWER HERE
+When the sample increases to 500, the distribution becomes much tighter around the true population proportion of about 0.10. The estimates don’t vary as much. This improvement is similar to what we saw in class, where a larger sample also made the estimates more accurate.
 
 **A news organization wants to report on White Evangelical voters using a poll of 200 people.** Based on your simulations, roughly how many White Evangelical respondents would that poll be likely to include? What does that suggest about the reliability of estimates for smaller subgroups?
 
-ANSWER HERE
+Since White Evangelicals make up about 10% of the population, a poll of 200 people would include about 20 White Evangelical respondents from that group. Since that’s a small number, the estimates could change a lot from poll to poll. This shows that results for smaller subgroups can be less reliable.
 
 **Imagine you are covering the 2028 presidential election and a campaign shares a poll showing White Evangelical support at 78%.** The poll sampled 400 people. Based on everything you've seen in this assignment and in class, what would you want to know before reporting that number?
 
-ANSWER HERE
+Before reporting on this number I would want to calculate/report out my possible room for error. And explain the constrants or percent possibility this data may be wrong. 
 
 When finished, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
 

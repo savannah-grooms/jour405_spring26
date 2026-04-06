@@ -47,7 +47,7 @@ t_test_periods
 
 **Answer this question:** What is the p-value? Is it less than 0.05? Can we reject the null hypothesis? What does this tell your editor?
 
-PUT ANSWERS HERE
+The p-value is 2.14e-05. This is much less than 0.05, so we can reject the null hypothesis. This tells my editor that the difference in car thefts between the first half and second half is statistically significant, meaning the decrease is not due to some random chance. 
 
 ### Task 3: Visualize the comparison (4 points)
 
@@ -132,7 +132,7 @@ tibble(
 
 **Answer this question:** How would you describe this effect size? Compare it to the effect sizes we calculated in class (the response times activity had a small effect, the housing prices activity had a medium effect). What does a large effect size mean for the story you'd write about car thefts?
 
-PUT ANSWERS HERE
+Compared to the other activities we've done in class, this is a large effect size. The effect size means the change is big and noticeable, so it is statisically important and a noticeable change. 
 
 ### Task 5: Putting it all together (7 points)
 

@@ -172,7 +172,7 @@ Apply this framework to the community policing data:
 
 **Question 1:** Write 1-2 sentences answering whether the result is statistically significant and how you know.
 
-ANSWER HERE
+Yes, the result is statistically significant because the p-value is less than 0.05. This means the decrease in response times is likely real not due to chance.
 
 **Question 2:** Write 1-2 sentences answering whether the result is meaningfully significant. Consider: the program cost the city $2 million to implement. Is a 25-second improvement in response times worth that investment? What context would you need to answer that question?
 
@@ -180,6 +180,8 @@ The results honestly are not meaningfully significant being so a  25-second impr
 
 **Question 3:** Write a headline and a 2-3 sentence lede for a story about these findings. Your text should accurately reflect both the statistical significance and the effect size — don't let the police chief's framing drive the story if the data tells a more nuanced one.
 
-Headline: $2 million program dropped calls but
+Headline: $2 Million Policing Program Shows Small Improvement in Response Times
+
+A new community policing program slightly reduced emergency response times, cutting about 25 seconds per call. The improvement is noteworthy but small compared to the original 8.2 min call time. The minimal improvementraises questions about whether the $2 million investment is worth the impact. 
 
 When you are finished, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.

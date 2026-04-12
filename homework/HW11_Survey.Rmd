@@ -145,7 +145,7 @@ ggplot(viz_data, aes(x = educ, y = percentage, fill = Type)) +
 
 **Question 4:** Which education group shows the biggest shift between weighted and unweighted results? In percentage points, how large is that shift? Does weighting change the story, or does it just change the exact numbers?
 
-The highschool or less group shows the biggest shift between weighted and unweighted results, with a change of 2.7%, while the other categories barely shifted one percent. This is because the group is underrepresented. It honestly doesn't change my story but adjusts the numbers to be more accurate. 
+The high school or less group shows the biggest shift between weighted and unweighted results, with a change of 2.7%, while the other categories barely shifted one percent. This is because the group is underrepresented. It honestly doesn't change my story but adjusts the numbers to be more accurate. 
 
 ## Task 6: The UMD Belonging Survey (8 points)
 
@@ -153,4 +153,6 @@ Earlier in class this week, we looked at the 2024 UMD Belonging and Community Su
 
 **Question 5:** Based on what you've learned in this assignment, write 2-3 paragraphs as if you were a reporter evaluating the UMD survey before writing a story based on it. Address: (1) what the lack of weighting means for how you'd use the results, (2) which groups in the UMD survey appeared most underrepresented based on Figures 1 and 2, and (3) what question you would ask the survey's authors before publishing.
 
-ANSWER HERE
+The UMD survey lack of weighting is not a true representation of the population. Therefore, if I were to use the survey, I would mention that it is unweighted and add a paragraph about what that means before my story. Earlier in this assignment, I added the term "unweighted" to my headline. I would do the same in that case as well. Based on figures 1 and 2, I believe minority students are underrepresented compared to the actual student body.  This is important because it could lead to an incomplete or biased understanding of students’ sense of belonging on campus.
+
+Before publishing my story, I would ask the survey's authors whether they considered applying weighting to close in these differences and if not, why. I would also look into how the response rates varied across different demographic groups.

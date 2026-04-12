@@ -1,6 +1,6 @@
 ----
 title: "HW11: Education Level and Survey Weighting"
-author: "Your Name Here"
+author: "Savannah Grooms"
 ---
 
 ```{r setup, include=FALSE}
@@ -58,7 +58,7 @@ nonvoters_data |>
 
 **Question 2:** College graduates are overrepresented in most surveys. Does that appear to be true here? Why might college graduates be more likely to respond to a survey than people with less education?
 
-ANSWER HERE
+I believe that college graduates are overrepresented in this survey. The survey weights adjust downward, meaning they showed up more often in the sample than they exist in the overall population. College graduates may be more likely to respond to surveys because they tend to be more civically engaged probably and more likely to check and respond to emails.
 
 ## Task 3: Unweighted Voting Intentions by Education (4 points)
 

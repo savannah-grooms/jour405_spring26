@@ -2,4 +2,12 @@
 title: "final_project"
 output: html_document
 ---
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(readxl)
+url <- "https://opendoorsdata.org/wp-content/uploads/2025/11/OD25_US-Study-Abroad_Tables.xlsx"
+download.file(url, destfile = "open_doors.xlsx", mode = "wb")
+excel_sheets("open_doors.xlsx")
+df <- read_excel("open_doors.xlsx", sheet = 2)
+```

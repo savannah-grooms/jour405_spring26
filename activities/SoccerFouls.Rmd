@@ -48,6 +48,15 @@ matches |>
 
 
 ### Task 6: Describe the results of both the correlation calculation and the scatterplot.
+The correlation between soccer fouls and the number of goals made is 0.018, which is not high, so the number of soccer fouls don't really look like they matter. Same for the line, it is pretty flat, giving no correlation. 
 
+### Task 7: 
+```{r}
+matches |> 
+  ggplot() +
+  geom_point(aes(x=goal_diff, y=so_g)) +
+  geom_smooth(aes(x=goal_diff, y=so_g), method="lm")
+```
+The correlation between the shots on goal and number of goals is positively correlated. Therefore, the highest of shots on goals, the higher the number of goals the team will score.  
 
 When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.

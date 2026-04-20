@@ -2,6 +2,23 @@
 title: "final_project"
 output: html_document
 ---
+Tests I can run:
+-Look at the relationship between student enrollment and study abroad participation
+-Focus on trends over time
+Create line graphs for:
+-Study abroad totals
+Black student enrollment
+-See how both change over time
+-Combine enrollment and study abroad data by year
+-Create a scatterplot
+-Add a regression line
+-See if higher enrollment relates to more students studying abroad
+-Look at where students study abroad
+Goal for story: Diversity in global education
+Focus specifically on Black students
+Percent of Black students of enrolled vs. percent studying abroad
+Is the gap shrinking or staying the same?
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
@@ -12,7 +29,19 @@ excel_sheets("open_doors.xlsx")
 blackstudy_abroad <- read_excel("open_doors.xlsx", sheet = 2, skip = 3)
 colnames(blackstudy_abroad) <- c("year", "total", "annual_change")
 ```
-I learned (through Google and prayers lol) how to load an excel sheet/file. This data contains the study abroad rates over the years for Black students. 
+
+```{r, load}
+url <- "https://opendoorsdata.org/wp-content/uploads/2025/11/OD25_US-Study-Abroad_Tables.xlsx"
+download.file(url, destfile = "open_doors.xlsx", mode = "wb")
+excel_sheets("open_doors.xlsx")
+leading_institutions <- read_excel("open_doors.xlsx", sheet = 8)
+```
+```{r, load}
+url <- "https://opendoorsdata.org/wp-content/uploads/2025/11/OD25_US-Study-Abroad_Tables.xlsx"
+download.file(url, destfile = "open_doors.xlsx", mode = "wb")
+excel_sheets("open_doors.xlsx")
+top_locations <- read_excel("open_doors.xlsx", sheet = 5)
+```
 
 ```{r, clean_up}
 blackstudy_abroad_clean <- blackstudy_abroad %>%
@@ -45,3 +74,5 @@ ggplot(blackstudy_abroad_clean, aes(x = year, y = total, group = 1)) +
 
 ```{r, black_enrollment_data}
 black_enrollment <- read_csv("/Users/savannahgrooms/Documents/table.csv", skip = 2)
+```
+

@@ -1,5 +1,47 @@
 ---
-title: "Final Project"
+title: "final_project"
 output: html_document
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(readxl)
+url <- "https://opendoorsdata.org/wp-content/uploads/2025/11/OD25_US-Study-Abroad_Tables.xlsx"
+download.file(url, destfile = "open_doors.xlsx", mode = "wb")
+excel_sheets("open_doors.xlsx")
+blackstudy_abroad <- read_excel("open_doors.xlsx", sheet = 2, skip = 3)
+colnames(blackstudy_abroad) <- c("year", "total", "annual_change")
+```
+I learned (through Google and prayers lol) how to load an excel sheet/file. This data contains the study abroad rates over the years for Black students. 
 
+```{r, clean_up}
+blackstudy_abroad_clean <- blackstudy_abroad %>%
+  mutate(
+    year = as.character(year),
+    total = as.numeric(total),
+    annual_change = as.numeric(annual_change)
+  ) %>%
+  filter(
+    !is.na(year),
+    year != "Year",
+    !is.na(total)
+  )
+blackstudy_abroad_clean <- blackstudy_abroad_clean %>%
+  mutate(year = factor(year, levels = year))
+```
+
+```{r, graph_data}
+ggplot(blackstudy_abroad_clean, aes(x = year, y = total, group = 1)) +
+  geom_line() +
+  geom_point() +
+  theme_minimal() +
+  labs(
+    title = "U.S. Study Abroad Totals, 1985/86 - 2023/24",
+    x = "Year",
+    y = "Total Students"
+  ) +
+  scale_y_continuous(labels = scales::comma)
+```
+
+```{r, black_enrollment_data}
+black_enrollment <- read_csv("/Users/savannahgrooms/Documents/table.csv", skip = 2)

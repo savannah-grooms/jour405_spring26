@@ -102,7 +102,9 @@ cat("  Adjusted R-squared:", summary(model_filtered)$adj.r.squared, "\n")
 
 How did removing those schools change the model? Did the coefficient change direction? Did the p-value or R-squared improve meaningfully? What does this tell you about the influence of suspicious data values on a regression model?
 
-Removing the schools made the model better becuase it is now statistically signifcant. 
+Removing the schools made the model better because it is now statistically significant. Removing the schools with 100% FARMS changed the model in a meaningful way. The coefficient did not change direction, but the relationship became more reliable. The p-value improved and became statistically significant. The R-squared also improved slightly, but it is still very low.
+This tells us that suspicious data values can have a strong influence on a regression model. 
+
 
 
 ### Task 5: Even the Better Model Has Problems
@@ -136,8 +138,7 @@ head(schools_filtered |> select(1, `FARMS Pct`, `% Met or Exceeded Math Expectat
 
 What are the largest residuals? Given the model's weak R-squared, how much confidence would you have in labeling these schools as over- or under-performers? Why?
 
-ANSWER HERE
-
+The largest residuals are the school where the actual scores are different from what the model predicted. Since the adjusted r-squared is low, the model does not explain too much about math scores making it unreliable. Based on this, I am not confident at all with labeling these schools as under or over performers. 
 
 ### Task 6: Write the Story Pitch
 
@@ -145,4 +146,6 @@ You've now run two models, examined the data quality and seen that even a cleane
 
 Write a short story pitch (3-5 sentences) that addresses the following: Does the data support or contradict the claim? What data quality issues did you find? What would you need - different data, a different model, additional reporting - before you could responsibly publish a story about this claim? Who would you call first?
 
-ANSWER HERE
+A claim made by the Montgomery County Public School board member (that schools with fewer low-income students perform better in math) is not strongly supported by the data. At first, the results showed suspicious data points, ex: schools reporting 100% of students receiving free or reduced-price meals. After removing those outliers, the model became statistically significant, but still explained very little of the variation in math scores. This shows that poverty alone is not a strong predictor of student performance. 
+
+Before publishing, I would look into the class sizes and teacher experience. I would first and interview  experts to better understand factors. 

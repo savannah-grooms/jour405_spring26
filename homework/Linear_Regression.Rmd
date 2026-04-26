@@ -86,7 +86,8 @@ For each of the two schools, answer:
 - Does anything in that profile help explain why the school is over- or under-performing the model?
 - What would your first reporting question be to the principal of that school?
 
-ANSWER HERE
+The school with the largest positive residual is Fox Chapel Elementary. The area has a household income of $119,731 and a pretty diverse population. The poverty rate is 9.8% and most adults have a degree. If I were to go to Fox Chapel, I would ask the principal what are some strategies the school is implementing to produce such high math scores? Germantown Elementary has the largest negative residual with a 8.3% poverty rate. I also has a average household income of $115,022.I would ask the principal what are some factors that might impact the math scores at your school?
+
 
 
 ### Task 5: Evaluate the Model and Write the Pitch (7 points)

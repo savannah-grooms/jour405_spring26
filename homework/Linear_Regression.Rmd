@@ -1,5 +1,5 @@
 title: "Identifying Schools with Biggest Differences in Math Test Scores, Part 2"
-author: "YOUR NAME"
+author: "Savannah Grooms"
 ---
 
 ```{r}
@@ -29,7 +29,7 @@ schools |> arrange(desc(`FARMS Pct`)) |> head(10)
 
 Are there any data quality issues like the ones you found in the Pennsylvania data? How does the distribution of FARMS percentages compare between the two counties? Note anything that concerns you or gives you confidence in the data.
 
-ANSWER HERE
+I do not see the same major data quality issue that appeared in the Pennsylvania data. In the Maryland data, the highest FARMS value is 96%, not 100%. The FARMS percentages also have a wider and more realistic spread which gives me more confidence in this data
 
 
 ### Task 2: Create a Scatterplot and Compare (5 points)
@@ -47,8 +47,7 @@ schools |>
 
 Describe what you see. Then compare this scatterplot specifically to the Pennsylvania one: what differences do you notice in the direction, strength, and spread of the relationship? The two counties share a name and are both suburban — what might explain why they look so different?
 
-ANSWER HERE
-
+The scatterplot appears to have a negative relationship. While the correlation is not super strong, as FARMS percentage increases, the percentage of students meeting or exceeding math expectations tends to decrease.This is very different from the Pennsylvania scatterplot, where the points were more scattered with a postive correlation because MD's FARMS percentages seem to be a bit more realistic.
 
 ### Task 3: Linear Regression Model (5 points)
 
@@ -61,7 +60,7 @@ summary(model)
 
 Report the three key statistics: the p-value, the Adjusted R-squared, and the coefficient for FARMS Pct. Then interpret them together — not separately. What does the combination of these three numbers tell you about the relationship between poverty and math scores in Montgomery County, Md.? Is this model worth using? How does it compare to the Pennsylvania model?
 
-ANSWER HERE
+The coefficient for FARMS Pct is -0.59511 , the p-value is about 0.00000000000000022, and the Adjusted R-squared is  0.6734. With these together, these numbers show a statistically significant negative relationship between FARMS percentage and math scores. This model is more useful than the Pennsylvania model because the FARMS has a variation in math scores.
 
 
 ### Task 4: Identifying Schools with the Biggest Residuals (6 points)

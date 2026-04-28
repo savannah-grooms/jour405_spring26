@@ -2,6 +2,10 @@
 title: "final_project"
 output: html_document
 ---
+###Link to AI: 
+https://chatgpt.com/share/69f0304d-aecc-83ea-a3ed-716d4fd2c445
+### Updates:
+Hi! So, I added my attempt to find out the "gap" in my data and basically answer "Are Black students represented in study abroad at the same rate they are enrolled in college? And is that gap shrinking over time?". My data and test ran okay, I used some of the skills such as mutate and lm that we learned in this course, however, my data isn't showing up. 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)

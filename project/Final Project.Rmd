@@ -2,22 +2,6 @@
 title: "final_project"
 output: html_document
 ---
-Tests I can run:
--Look at the relationship between student enrollment and study abroad participation
--Focus on trends over time
-Create line graphs for:
--Study abroad totals
-Black student enrollment
--See how both change over time
--Combine enrollment and study abroad data by year
--Create a scatterplot
--Add a regression line
--See if higher enrollment relates to more students studying abroad
--Look at where students study abroad
-Goal for story: Diversity in global education
-Focus specifically on Black students
-Percent of Black students of enrolled vs. percent studying abroad
-Is the gap shrinking or staying the same?
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
@@ -71,8 +55,38 @@ ggplot(blackstudy_abroad_clean, aes(x = year, y = total, group = 1)) +
   ) +
   scale_y_continuous(labels = scales::comma)
 ```
-
 ```{r, black_enrollment_data}
 black_enrollment <- read_csv("/Users/savannahgrooms/Documents/table.csv", skip = 2)
 ```
 
+```{r, clean_black_enrollment}
+black_enrollment_clean <- black_enrollment |>
+  rename(
+    year = 1,
+    black_enrollment_percent = 2
+  ) |>
+  mutate(
+    year = as.character(year),
+    black_enrollment_percent = as.numeric(black_enrollment_percent)
+  ) |>
+  filter(!is.na(year), !is.na(black_enrollment_percent))
+```
+
+```{r, test}
+blackstudy_abroad_gap <- blackstudy_abroad_clean |>
+  mutate(
+    black_study_abroad_percent = total / sum(total) * 100
+  )
+
+combined_data <- full_join(
+  blackstudy_abroad_for_gap,
+  black_enrollment_clean,
+  by = "year"
+)
+
+gap_data <- combined_data |>
+  mutate(
+    gap = black_enrollment_percent - black_study_abroad_percent
+  )
+
+```

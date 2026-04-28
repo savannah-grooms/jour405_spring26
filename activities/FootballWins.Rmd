@@ -9,7 +9,7 @@ Multiple regression analysis is a statistical method used to understand the rela
 
 ```{r setup}
 library(tidyverse)
-#install.packages('corrplot')
+install.packages('corrplot')
 library(corrplot)
 ```
 
@@ -26,7 +26,7 @@ teams <- read_csv("https://raw.githubusercontent.com/dwillis/jour405_files/main/
 Next, we construct a linear model to analyze how different factors like `Yards Gained`, `Takeaways`, and `Points Scored` influence the number of wins. This model helps us quantify the relationships and assess which factors are significant predictors of success.
 
 ```{r}
-model <- lm(Wins ~ `Yards Gained` + Takeaways + `Points Scored`, data = teams)
+model <- lm(Wins ~ `Yards Gained` + `Points Scored` + `Giveaways` , data = teams)
 summary(model)
 ```
 
@@ -54,7 +54,8 @@ The coefficients tell us the estimated effect of each independent variable on th
 
 Is this a useful model, based on what you've seen? Why?
 
-ANSWER HERE
+This model is kind of useful. Based on the variables, about 62% of the variation in wins meaning it is decent. Also, the F-statistic is statistically significant, showing the model works as a whole.
+However, not all variables are helpful. Points Scored is clearly significant, but Yards Gained is not significant. So, some of the model is missing some important factors that affect wins.
 
 ## Correlation Analysis
 
@@ -80,8 +81,10 @@ The results from our correlation analysis show the strength of the relationships
 
 Which of these three factors - Yards Gained, Takeaways and Points Scored - have the most impact on wins? Are there any that do not seem impactful at all?
 
-ANSWER HERE
+The number of points scored has the biggest impact of the number of wins. There is not a variable that does not impact the number of wins at all. However, the number of yards gained is not impacted by the number of takeaways and vice-versa. 
 
 ## Using the Model (3 points)
 
 Without using the words "multiple regression model", describe how you could use this model to cover a team or game.
+
+This model can be used to cover a team or game because it can help find correlations in the data to help the team cover and win a game. For example, you could point out that scoring more points is strongly tied to winning, so if a team wins, you might highlight how their offense performed. On the flip side, if they lose, it can be mentioned that they did not gain a lot of yards ultimately resulting in their downfall. 

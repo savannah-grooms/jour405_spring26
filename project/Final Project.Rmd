@@ -2,95 +2,224 @@
 title: "final_project"
 output: html_document
 ---
-###Link to AI: 
+
+### Link to AI:
 https://chatgpt.com/share/69f0304d-aecc-83ea-a3ed-716d4fd2c445
-### Updates:
-Hi! So, I added my attempt to find out the "gap" in my data and basically answer "Are Black students represented in study abroad at the same rate they are enrolled in college? And is that gap shrinking over time?". My data and test ran okay, I used some of the skills such as mutate and lm that we learned in this course, however, my data isn't showing up. 
+
+### Research question:
+Are Black students represented in study abroad at the same rate they are enrolled in college? And is that gap shrinking over time?
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(readxl)
-url <- "https://opendoorsdata.org/wp-content/uploads/2025/11/OD25_US-Study-Abroad_Tables.xlsx"
-download.file(url, destfile = "open_doors.xlsx", mode = "wb")
-excel_sheets("open_doors.xlsx")
-blackstudy_abroad <- read_excel("open_doors.xlsx", sheet = 2, skip = 3)
-colnames(blackstudy_abroad) <- c("year", "total", "annual_change")
 ```
 
-```{r, load}
+## 1. Download and load data
+In this section, I am downloading the Open Doors study abroad data and loading the tables I need. Table 1 gives the total number of U.S. students studying abroad over time. Table 2 includes demographic information, including race and ethnicity.
+
+```{r download_and_load}
 url <- "https://opendoorsdata.org/wp-content/uploads/2025/11/OD25_US-Study-Abroad_Tables.xlsx"
 download.file(url, destfile = "open_doors.xlsx", mode = "wb")
-excel_sheets("open_doors.xlsx")
-leading_institutions <- read_excel("open_doors.xlsx", sheet = 8)
-```
-```{r, load}
-url <- "https://opendoorsdata.org/wp-content/uploads/2025/11/OD25_US-Study-Abroad_Tables.xlsx"
-download.file(url, destfile = "open_doors.xlsx", mode = "wb")
-excel_sheets("open_doors.xlsx")
-top_locations <- read_excel("open_doors.xlsx", sheet = 5)
+
+# Table 1: total study abroad participation by year (used for context plot)
+study_abroad_totals <- read_excel("open_doors.xlsx", sheet = "1", skip = 3)
+colnames(study_abroad_totals) <- c("year", "total", "annual_change")
+
+# Table 2: profile of study abroad students, including Race/Ethnicity by year
+study_abroad_profile_raw <- read_excel(
+  "open_doors.xlsx",
+  sheet = "2",
+  col_names = FALSE
+)
 ```
 
-```{r, clean_up}
-blackstudy_abroad_clean <- blackstudy_abroad %>%
+## 2. Clean the study abroad totals 
+Next, I am cleaning the total study abroad data. This makes sure the year and total columns are in the correct format so I can use them for analysis.
+
+```{r clean_study_abroad}
+study_abroad_clean <- study_abroad_totals |>
   mutate(
-    year = as.character(year),
-    total = as.numeric(total),
+    year          = as.character(year),
+    total         = as.numeric(total),
     annual_change = as.numeric(annual_change)
-  ) %>%
-  filter(
-    !is.na(year),
-    year != "Year",
-    !is.na(total)
-  )
-blackstudy_abroad_clean <- blackstudy_abroad_clean %>%
-  mutate(year = factor(year, levels = year))
+  ) |>
+  filter(!is.na(year), year != "Year", !is.na(total))
+```
+This table now shows the Black share of study abroad students by year. This is important because I need to compare Black study abroad participation to Black college enrollment.
+
+## 3. Extract the Black study abroad share by year 
+
+In this section, I am pulling out the row for Black or African American students from the Open Doors table. This gives me the percentage of study abroad students who were Black for each available year.
+
+```{r black_study_abroad_share}
+year_headers <- as.character(unlist(study_abroad_profile_raw[6, 2:11]))
+
+black_sa_row <- study_abroad_profile_raw |>
+  filter(str_detect(...1, "^Black")) |>
+  slice(1)
+
+black_study_abroad <- tibble(
+  year_label                 = year_headers,
+  black_study_abroad_percent = as.numeric(unlist(black_sa_row[1, 2:11]))
+) |>
+  mutate(year = str_extract(year_label, "^\\d{4}")) |>
+  select(year, year_label, black_study_abroad_percent)
+
+black_study_abroad
+```
+This table now shows the Black share of study abroad students by year. This is important because I need to compare Black study abroad participation to Black college enrollment.
+## 4. Load and clean NCES Black enrollment percentages
+
+Now I am loading the NCES enrollment data from table.csv. I am pulling the Black enrollment row and reshaping it so it can be joined with the study abroad data.
+
+```{r load_black_enrollment}
+raw_enrollment <- read_csv(
+  "table.csv",
+  skip = 3,
+  col_names = FALSE,
+  col_types = cols(.default = "c")
+)
+
+black_row <- raw_enrollment |>
+  filter(str_trim(X1) == "Black") |>
+  slice(1)
+
+years_in_table <- c("1976","1980","1990","2000","2013",
+                    "2018","2019","2020","2021","2022","2023")
+
+black_enrollment_clean <- tibble(
+  year                     = years_in_table,
+  black_enrollment_percent = as.numeric(unlist(black_row[1, 13:23]))
+)
+
+black_enrollment_clean
 ```
 
-```{r, graph_data}
-ggplot(blackstudy_abroad_clean, aes(x = year, y = total, group = 1)) +
+This table gives me the percentage of college enrollment made up by Black students. Since my research question is about representation, this is the comparison point for the study abroad data.
+
+## 5. Build the gap dataset
+
+I am joining the Black study abroad data with the Black enrollment data by year. Then I calculate the gap by subtracting the Black study abroad percentage from the Black enrollment percentage.
+
+```{r build_gap_data}
+gap_data <- black_study_abroad |>
+  inner_join(black_enrollment_clean, by = "year") |>
+  mutate(
+    year = as.integer(year),
+    gap  = black_enrollment_percent - black_study_abroad_percent
+  ) |>
+  arrange(year)
+
+gap_data
+```
+This new dataset is the main dataset for my project. The gap shows the difference between Black college enrollment and Black study abroad participation. A larger gap means Black students are less represented in study abroad compared to their enrollment in college.
+
+#6 Descriptive Stats
+
+I am calculating descriptive statistics for the gap. This helps summarize the average gap, the smallest gap, and the largest gap across the years in my dataset.
+```{r build_gap_data}
+gap_data |>
+  summarize(
+    average_black_enrollment_percent = mean(black_enrollment_percent, na.rm = TRUE),
+    average_black_study_abroad_percent = mean(black_study_abroad_percent, na.rm = TRUE),
+    average_gap = mean(gap, na.rm = TRUE),
+    median_gap = median(gap, na.rm = TRUE),
+    smallest_gap = min(gap, na.rm = TRUE),
+    largest_gap = max(gap, na.rm = TRUE)
+  )
+```
+The descriptive statistics help show whether there is a consistent difference between Black students’ college enrollment and their participation in study abroad programs. Since the average gap is greater than zero, the findings show that Black students are consistently underrepresented in study abroad compared to their overall enrollment in higher education.
+
+#7 Visualization for study abroad over time
+This data shows the overall trend in U.S. study abroad participation. This gives context for how study abroad participation has changed over time.
+```{r study_visualization}
+ggplot(study_abroad_clean, aes(x = year, y = total, group = 1)) +
   geom_line() +
   geom_point() +
   theme_minimal() +
   labs(
-    title = "U.S. Study Abroad Totals, 1985/86 - 2023/24",
-    x = "Year",
+    title = "U.S. Study Abroad Totals Over Time",
+    x = "Academic Year",
     y = "Total Students"
   ) +
-  scale_y_continuous(labels = scales::comma)
+  scale_y_continuous(labels = scales::comma) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-```{r, black_enrollment_data}
-black_enrollment <- read_csv("/Users/savannahgrooms/Documents/table.csv", skip = 2)
-```
+This shows the overall size of study abroad participation. This matters because even if total study abroad participation rises or falls, my research question focuses on whether Black students are represented fairly within that total.
 
-```{r, clean_black_enrollment}
-black_enrollment_clean <- black_enrollment |>
-  rename(
-    year = 1,
-    black_enrollment_percent = 2
+#8 Black enrollment v Study abroad
+This graph compares Black college enrollment percentages with Black study abroad percentages. This shows whether Black students are participating in study abroad at the same rate they are enrolled in college.
+```{r study_visualization_gap}
+gap_data |>
+  pivot_longer(
+    cols = c(black_enrollment_percent, black_study_abroad_percent),
+    names_to = "category",
+    values_to = "percent"
   ) |>
-  mutate(
-    year = as.character(year),
-    black_enrollment_percent = as.numeric(black_enrollment_percent)
-  ) |>
-  filter(!is.na(year), !is.na(black_enrollment_percent))
-```
-
-```{r, test}
-blackstudy_abroad_gap <- blackstudy_abroad_clean |>
-  mutate(
-    black_study_abroad_percent = total / sum(total) * 100
+  ggplot(aes(x = year, y = percent, color = category)) +
+  geom_line() +
+  geom_point() +
+  theme_minimal() +
+  labs(
+    title = "Black Enrollment Compared to Black Study Abroad Participation",
+    x = "Year",
+    y = "Percent",
+    color = "Category"
   )
-
-combined_data <- full_join(
-  blackstudy_abroad_for_gap,
-  black_enrollment_clean,
-  by = "year"
-)
-
-gap_data <- combined_data |>
-  mutate(
-    gap = black_enrollment_percent - black_study_abroad_percent
-  )
-
 ```
+This graph compares the two percentages. Since the Black enrollment line is significantly higher than the Black study abroad line, that means Black students are underrepresented in study abroad compared to their share of college enrollment.
+
+#9 Visualization of the gap over time
+This graph shows the gap over time. I use this to see whether the gap is getting smaller.
+
+```{r study_visualization_gap}
+ggplot(gap_data, aes(x = year, y = gap)) +
+  geom_line() +
+  geom_point() +
+  theme_minimal() +
+  labs(
+    title = "Gap Between Black College Enrollment and Study Abroad Participation",
+    x = "Year",
+    y = "Gap in Percentage Points"
+  )
+```
+This visualization helps answer the second part of my research question: whether the gap is shrinking over time.
+
+#10 Regression Model
+
+For my first statistical technique, I am using a linear regression model. This model looks at whether the gap changes over time.
+```{r study_regression}
+gap_model <- lm(gap ~ year, data = gap_data)
+summary(gap_model)
+```
+The regression model helps show whether there is a relationship between year and the size of the gap.
+
+#11 Correlation Test
+For my second statistical technique, I am using a correlation test. This checks whether there is a relationship between the year and the gap.
+```{r study_correlation}
+cor.test(gap_data$year, gap_data$gap)
+```
+The correlation test gives another way to look at whether the gap changes over time. Since the dataset is small, the result will not be the final answer by itself.
+
+### Findings
+
+The data shows a clear and consistent gap between Black students' college enrollment and their participation in study abroad programs. In every year included in the analysis, Black students make up a significantly larger percentage of overall college enrollment than they did of students participating in study abroad. 
+
+One of the biggest things that stood out to me was how little Black college enrollment changed over time. From 2018 to 2023, Black students consistently made up of about 13% of overall college enrollment, ranging only from 13.1% to 13.4%. Study abroad told a different story. Black students made up anywhere from 6.4% of study abroad participants in 2018 to just 4.1% in 2020.
+
+The largest gap was of course in 2020, where study abroad rates dropped no matter what due to COVID-19. There was some improvement after that. Black study abroad participation increased from 4.1% in 2020 to 5.3% in 2021, the continued to rise to 5.9% in 2022 and 6.1% in 2023.
+
+##Pitch
+Studying abroad is often promoted as one of the most exciting and trans formative parts of the college experience. Universities market it as a chance to gain global experience. Universities market it as a chance to gain global experience, build connections and step outside of your comfort zone. But based on my analysis, not every student appears to have equal access to that opportunity. 
+
+ Looking at the years 2018, 2019, 2021, 2022, and 2023 (excluding 2020 due to the COVID-19 pandemic disruption of international travel), Black students consistently made up about 13% of overall college enrollment, but only about 5% to 6% of study abroad participants.
+ 
+ This story will report the disconnect between Black students being present in higher education, but not being equally represented in one of the college's most promoted opportunities. The gap remained consistent across every year I analyzed. That raises the question- if Black students are enrolling in college at relatively steady rates, what is preventing equal participation in study abroad?
+ 
+This story would go beyond the numbers and focus on the lived experiences. Are financial barriers the biggest issue? Do students feel study abroad programs are not designed with them in mind? For reporting I would interview Black students who studied abroad, students who wanted to but ultimately did not, study abroad advisory and university admin in the study abroad departments at various schools.I would also want to compare institutions that have stronger Black study abroad participation rates to see what they are doing differently.
+
+One limitation of this analysis in the lack of years I can explore the data with. Although the numbers clearly point to a persistent disparity worth investigating, I wish I had more data in years.
+
+At it's core, my story asks: If study abroad is supposed to be a defining part of the college experience, who is actually being included in that experience and who is still being left out?
+
